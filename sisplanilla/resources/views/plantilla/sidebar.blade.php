@@ -26,11 +26,19 @@
                         </ul>
                     </li>
 
-                    <li @click="menu=4" class="nav-item">
-                        <a class="nav-link" href="#"><i class="icon-grid"></i>Menus</a>
+                    <li class="nav-item nav-dropdown">
+                        <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-lock"></i>Gestion Menu</a>
+                        <ul class="nav-dropdown-items">
+                            <li @click="menu=4" class="nav-item">
+                                <a class="nav-link" href="#"><i class="icon-wallet"></i>Menus</a>
+                            </li>
+                            <li @click="menu=5" class="nav-item">
+                                <a class="nav-link" href="#"><i class="icon-notebook"></i>Items de Menu</a>
+                            </li>
+                        </ul>
                     </li>
 
-                    <li @click="menu=5" class="nav-item">
+                    <li @click="menu=6" class="nav-item">
                         <a class="nav-link" href="#"><i class="icon-info"></i>Empresa</a>
                     </li>
 

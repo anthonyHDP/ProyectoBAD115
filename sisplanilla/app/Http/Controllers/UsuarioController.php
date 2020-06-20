@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Hash;
+
 use Illuminate\Http\Request;
 use App\Usuario;
 use App\Rol;
@@ -96,7 +98,8 @@ class UsuarioController extends Controller
         //$usuario->password = $request->password;
         //$usuario->SHA256($request->password);
         //$usuario->hash('sha256', $request->password);
-        $usuario->password = hash('sha256', $request->password);
+        //$usuario->password = hash('sha256', $request->password);
+        $usuario->password =Hash::make(hash('sha256', $request->password));
         $usuario->activo = $request->activo;
         //$usuario->first_session = $request->first_session;
         //$usuario->last_session = $request->last_session;

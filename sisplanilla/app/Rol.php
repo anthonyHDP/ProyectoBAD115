@@ -19,4 +19,9 @@ class Rol extends Model
     {
         return $this->hasMany('App\Roles_Privilegios');
     }
+
+    public function menus()
+    {
+        return $this->hasMany('App\Menu');
+    }
 }

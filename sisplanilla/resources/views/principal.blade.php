@@ -27,7 +27,7 @@
         <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button">
           <span class="navbar-toggler-icon"></span>
         </button>
-<!--         <ul class="nav navbar-nav d-md-down-none">
+        <!-- <ul class="nav navbar-nav d-md-down-none">
             <li class="nav-item px-3">
                 <a class="nav-link" href="#">Escritorio</a>
             </li>
@@ -35,27 +35,34 @@
                 <a class="nav-link" href="#">Configuraciones</a>
             </li>
         </ul> -->
-        <ul class="nav navbar-nav ml-auto" style="margin-right:2%">
+        <ul class="nav navbar-nav ml-auto">
+            
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                     <img src="img/avatars/6.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                    <span class="d-md-down-none">admin </span>
+                    <span class="d-md-down-none">{{Auth::user()->username}} </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <div class="dropdown-header text-center">
                         <strong>Cuenta</strong>
                     </div>
-                    <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Perfil</a>
-                    <a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Cerrar sesión</a>
+                    
+                    <a class="dropdown-item" href="{{ route('logout') }}" 
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <i class="fa fa-lock"></i> Cerrar sesión</a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                    </form>
+                    
                 </div>
             </li>
         </ul>
     </header>
 
     <div class="app-body">
-        
         @include('plantilla.sidebar')
-        <!-- Contenido Principal -->
+        <!-- Contenido Principal -->    
         @yield('contenido')
 
         <!-- /Fin del contenido principal -->
@@ -63,8 +70,8 @@
     </div>
     
     <footer class="app-footer">
-        <span></span>
-        <span class="ml-auto">Desarrollado por DHAET SYSTEMS</span>
+        <span><a href="#">DHAET</a> &copy; 2020</span>
+        <span class="ml-auto">Desarrollado por <a href="#">DHAET SYSTEMS</a></span>
     </footer>
 
     <script src="js/app.js"></script>

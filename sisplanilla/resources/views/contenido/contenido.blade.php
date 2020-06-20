@@ -18,11 +18,11 @@
         </template>
 
         <template v-if="menu==4">
-            <h1>Contenido del menú 4</h1>
+            <menu_valido></menu_valido>
         </template>
 
         <template v-if="menu==5">
-            <h1>Contenido del menú 5</h1>
+            <item_menu></item_menu>
         </template>
         
 

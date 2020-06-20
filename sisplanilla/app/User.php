@@ -3,7 +3,8 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+//use Illuminate\Contracts\Auth\MustVerifyEmail;
+//use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -15,7 +16,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
+   /* protected $fillable = [
         'name', 'email', 'password',
     ];
 
@@ -24,7 +25,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $hidden = [
+    /*protected $hidden = [
         'password', 'remember_token',
     ];
 
@@ -33,7 +34,22 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $casts = [
+    /*protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    */
+
+    protected $table = 'usuarios';
+    protected $primaryKey = 'id_usuario';
+    protected $fillable = ['id_rol', 'codigo_empleado', 'username', 'password', 'activo', 'first_session', 'last_session', 'intentos_fallidos'];
+
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
+
+    public function roles()
+    {
+        return $this->belongsTo('App\Rol');
+    }
 }
