@@ -80,3 +80,10 @@ Route::put('/itemmenu/desactivar', 'ItemMenuController@desactivar');
 Route::put('/itemmenu/activar', 'ItemMenuController@activar');
 Route::get('/menu/selectMenus', 'MenuController@selectMenus');
 Route::get('/itemmenu/selectItemsPadre', 'ItemMenuController@selectItemsPadre');
+
+Route::get('/empresa', 'EmpresaController@index');
+Route::post('/empresa/registrar', 'EmpresaController@store');
+Route::put('/empresa/actualizar', 'EmpresaController@update');
+//Route::put('/empresa/desactivar', 'EmpresaController@desactivar');
+//Route::put('/empresa/activar', 'EmpresaController@activar');
+Route::get('/direccion/selectDireccion', 'EmpresaController@selectDireccion');

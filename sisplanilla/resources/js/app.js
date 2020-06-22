@@ -27,6 +27,7 @@ Vue.component('privilegio', require('./components/Privilegio.vue').default);
 Vue.component('usuario', require('./components/Usuario.vue').default);
 Vue.component('menu_valido', require('./components/Menu.vue').default);
 Vue.component('item_menu', require('./components/Item_Menu.vue').default);
+Vue.component('empresa', require('./components/Empresa.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

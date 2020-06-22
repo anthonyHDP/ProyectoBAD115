@@ -25,5 +25,8 @@
             <item_menu></item_menu>
         </template>
         
+        <template v-if="menu==6">
+            <empresa></empresa>
+        </template>
 
     @endsection
