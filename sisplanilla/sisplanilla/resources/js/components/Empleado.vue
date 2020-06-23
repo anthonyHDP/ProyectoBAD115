@@ -31,7 +31,8 @@
                         <table class="table table-bordered table-striped table-sm">
                             <thead>
                                 <tr>
-                                    <th>Opciones</th>
+                                    <th style="text-align: center">ID</th>
+                                    <th>Codigo Empleado</th>
                                     <th>Primer Nombre</th>
                                     <th>Segundo Nombre</th>
                                     <th>Primer Apellido</th>
@@ -39,26 +40,50 @@
                                     <th>Email-Personal</th>
                                     <th>Email-Institucional</th>
                                     <th>Estado</th>
+                                    <th style="text-align: center">Opciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="empleado in arrayEmpleado" :key="empleado.id">
+                                 <tr v-for="empleado in arrayEmpleado" :key="empleado.codigo_empleado">
+                                    <td v-text="empleado.codigo_empleado" style="text-align: center"></td>
+                                    <td v-text="empleado.primer_nombre"></td>
+                                    <td v-text="empleado.segundo_nombre"></td>
+                                    <td v-text="empleado.primer_apellido"></td>
+                                    <td v-text="empleado.segundo_apellido"></td>
+                                    <td v-text="empleado.email_personal"></td>
+                                    <td v-text="empleado.email_institucional"></td>
+
+                                    <td v-if="empleado.activo == '1'">Sí</td>
+                                    <td v-if="empleado.activo == '0'">No</td>
+                                    
+                                    <td style="text-align: center;">
+                                        <button type="button" @click="abrirModal('empleado', 'actualizar', usuario)" class="btn btn-warning btn-sm btn-circle-text-white">
+                                          <i class="icon-pencil"></i>
+                                        </button>
+                                        <button type="button" @click="abrirModalEliminar(empleado)" class="btn btn-danger btn-sm btn-circle">
+                                          <i class="icon-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                  <!--
+                                <tr v-for="empleado in arrayEmpleado" :key="empleado.codigo_empleado">
 
                                     <td style="text-aling:center;">
                                         <button type="button" @click="abrirModal('empleado','actualizar',empleado)" class="btn btn-warning btn-sm"  >
                                           <i class="icon-pencil"></i>
                                         </button> &nbsp;
                                         <template v-if="empleado.condicion">
-                                            <button type="button" class="btn btn-danger btn-sm" @click="desactivarEmpleado(empleado.id)">
+                                            <button type="button" class="btn btn-danger btn-sm" @click="desactivarEmpleado(empleado.codigo_empleado)">
                                                 <i class="icon-trash"></i>
                                             </button>
                                         </template>   
                                         <template v-else>
-                                            <button type="button" class="btn btn-info btn-sm" @click="activarEmpleado(empleado.id)">
+                                            <button type="button" class="btn btn-info btn-sm" @click="activarEmpleado(empleado.codigo_empleado)">
                                                 <i class="icon-check"></i>
                                             </button>
                                         </template> 
                                     </td>
+                                    <td v-text="empleado.codigo_empleado"></td>
                                     <td v-text="empleado.primer_nombre"></td>
                                     <td v-text="empleado.segundo_nombre"></td>
                                     <td v-text="empleado.primer_apellido"></td>
@@ -75,7 +100,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                                
+                                -->
                             </tbody>
                         </table>
                         <nav>
@@ -115,7 +140,9 @@
                                     <a class="nav-link" id="v-pills-profile_contacto-tab" data-toggle="pill" href="#v-pills-profile_contacto" role="tab" aria-controls="v-pills-profile_contacto" aria-selected="false">Ingreso de Contactos Telefonicos</a>
                                     <a class="nav-link" id="v-pills-messages_identificacion-tab" data-toggle="pill" href="#v-pills-messages_identificacion" role="tab" aria-controls="v-pills-messages_identificacion" aria-selected="false">Ingreso de Documentos de Identificacion</a>
                                     <a class="nav-link" id="v-pills-settings_empleado-tab" data-toggle="pill" href="#v-pills-settings_empleado" role="tab" aria-controls="v-pills-settings_empleado" aria-selected="false">Ingreso de Datos de Empleados</a>
-                                   <a class="nav-link" id="v-pills-settings_contrato-tab" data-toggle="pill" href="#v-pills-settings_contrato" role="tab" aria-controls="v-pills-settings" aria-selected="false">Contrato de Trabajo</a>
+                                     <a class="nav-link" id="v-pills-settings_codigo_jefe-tab" data-toggle="pill" href="#v-pills-settings_codigo_jefe" role="tab" aria-controls="v-pills-settings_codigo_jefe" aria-selected="false">Asignacion de Jefe</a>
+                                    <a class="nav-link" id="v-pills-settings_contrato-tab" data-toggle="pill" href="#v-pills-settings_contrato" role="tab" aria-controls="v-pills-settings" aria-selected="false">Contrato de Trabajo</a>
+                                   
                                     </div>
                                 </div>
                                 <div class="col-9">
@@ -241,7 +268,7 @@
                                  <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text_input">Fecha Nacimiento</label>
                                     <div class="col-md-9">
-                                        <input type="text" v-model="fecha_nacimiento" class="form-control" placeholder="Ingresela en el formato dd-mm-yyy">
+                                        <input type="date" v-model="fecha_nacimiento" class="form-control" placeholder="Ingresela en el formato dd-mm-yyy">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -276,9 +303,9 @@
                                 </div>
                                 <div class="form-group row">
                                 <div class="col-md-6 form-control-label">
-                                    <label for="text_input">Codigo de profesion</label>
+                                    <label for="text_input"> Profesion</label>
                                     <select v-model="codigo_profesion" class="form-control">
-                                        <option value="0" selected>-- Seleccione el codigo de profesion --</option>
+                                        <option value="0" selected>-- Seleccione Profesion --</option>
                                         <option v-for="profesiones in arraycodigo_profesion" :key="profesiones.codigo_profesion" :value="profesiones.codigo_profesion" v-text="profesiones.titulo"></option>
                                     </select>
                                  </div>
@@ -296,6 +323,45 @@
                                
                                 
                                     </div>
+
+                                    <div class="tab-pane fade" id="v-pills-settings_codigo_jefe" role="tabpanel" aria-labelledby="v-pills-profile_settings_codigo_jefe-tab">
+                                <!--
+                                <div class="form-group row">
+                                 <div class="col-md-6 form-control-label">
+                                    <label for="text_input"> Asignacion de Jefe</label>
+                                    <select v-model="codigo_empleado" class="form-control">
+                                        <option value="text" selected>-- Seleccione Jefe --</option>
+                                        <option v-for="empleados_jefe in arraycodigo_empleado" :key="empleados_jefe.codigo_empleado" :value="empleados_jefe.codigo_empleado" 
+                                        v-text="empleados_jefe.codigo_empleado"></option>
+                                    </select>
+                                 </div>
+                                </div>
+                                -->
+                                     
+                                <div v-if="tipoAccion == 1" class="form-group">
+                                    <label for="text">Buscar empleado por codigo-Asignacion-Jefe</label>
+                                    <div class="row" style="margin-left:0.45%">
+                                        <input v-model="codigo_empleado" maxlength="6" type="text" class="form-control col-md-3" placeholder="Ej. AA1000">
+                                        <button id="btn_empleado" @click="selectEmpleado(codigo_empleado)" type="button" class="btn btn-success btn-buscar"><i class="fa fa-search"></i></button>
+                                        <input id="empleado_input_e" type="text" class="form-control col-sm-7" style="font-style:italic; margin-left:5.5%; border:0; border-radius:6px; background: #eee" :value="nombres+' '+apellidos+'      '+codigo_empleado_res" disabled>      
+                                        <span class="help-block" style="font-size:80%; margin-top:1%">(*) Debe consultar el codigo de empleado y si existe, se asociara el jefe al Empleado a registrar</span>
+                                    </div>
+                                </div>
+                                <div v-if="tipoAccion == 2" class="form-group">
+                                    <label for="text">Empleado</label>
+                                    <input type="text" class="form-control" style="font-style:italic; border:0; border-radius:6px; background: #eee" :value="nombres+' '+apellidos+'      '+codigo_empleado_res" disabled>
+                                </div>
+                                  <!--
+                                  <div class="form-group row">
+                                            <label class="col-md-3 form-control-label" for="text-input">Asignacion de Jefe</label>
+                                            <div class="col-md-9">
+                                                <input type='input' v-model="codigo_jefe" class="form-control" placeholder="Ingrese el id de su Jefe">
+                                            </div>
+                                    </div>
+                                     
+                                     -->
+
+                                    </div>
                                     <div class="tab-pane fade" id="v-pills-settings_contrato" role="tabpanel" aria-labelledby="v-pills-settings_contrato-tab">
                                 
                                         <div class="form-group row">
@@ -307,7 +373,7 @@
                                         <div class="form-group row">
                                             <label class="col-md-3 form-control-label" for="text_input">Fecha de Inicio de Contrato</label>
                                             <div class="col-md-9">
-                                                <input type="text" v-model="email_institucional" class="form-control" placeholder="Ingrese Fecha Inicial">
+                                                <input type="date" v-model="email_institucional" class="form-control" placeholder="Ingrese Fecha Inicial">
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -385,11 +451,14 @@
               identificador_isss:'',
               identificador_nup:'',
               identificador_nit:'',
+              codigo_empleado_res: '',
               ubicacion:'',
               numero:'',
               numero_vivienda:'',
               detalles:'',
               codigo_profesion:0,
+              codigo_empleado:'',
+              codigo_jefe:'',
               id_direccion:0,
               numero_documento_identificacion:0,
               id_estado_civil:0,
@@ -400,6 +469,7 @@
               codigo_departamento:0,
               id_tipo_identificacion:0,
               arraycodigo_profesion:[],
+              arraycodigo_empleado:[],
               arrayid_direccion:[],
               arrayEmpleado:[],
               arrayid_estado_civil:[],
@@ -470,6 +540,65 @@
                         console.log(error);
                 });
             },
+            
+            
+            selectEmpleado(){
+                let me=this;
+                var url= '/empleados/selectEmpleado';
+                axios.get(url).then(function (response) {
+                    //console.log(response);
+                    var respuesta= response.data;
+                    me.arraycodigo_empleado = respuesta.empleados_jefe;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+
+            },
+            
+            selectEmpleado(codigo_empleado){
+                let me=this;
+                var url= '/empleado/selectEmpleado?codigo_empleado='+codigo_empleado;
+                axios.get(url).then(function (response) {
+                    var respuesta  = response.data;
+                    me.nombres = '';
+                    me.apellidos = '';
+                    me.codigo_empleado_res = '';
+                    console.log("TIPO EMPLEADO[0]: "+ typeof response.data.empleado[0]);
+                    console.log("RESPONSE "+response);
+                    console.log("DATA: "+response.data);
+                    console.log("EMPLEADO: "+response.data.empleado[0]);
+                    if(me.tipoAccion == 1){
+                        if(response.data.empleado[0] !== null && typeof response.data.empleado[0] !== 'undefined'){
+                            console.log('BANDERA: '+response.data.bandera);
+                            if(response.data.bandera != 0){
+                                me.nombres = respuesta.empleado[0].primer_nombre+" "+respuesta.empleado[0].segundo_nombre;
+                                me.apellidos = respuesta.empleado[0].primer_apellido+" "+respuesta.empleado[0].segundo_apellido;
+                                me.codigo_empleado_res = codigo_empleado;
+                                document.getElementById("empleado_input_e").style.border = "1px solid #ccc";
+                            }else{
+                                me.nombres = respuesta.empleado[0].primer_nombre+" "+respuesta.empleado[0].segundo_nombre;
+                                me.apellidos = respuesta.empleado[0].primer_apellido+" "+respuesta.empleado[0].segundo_apellido;
+                                me.codigo_empleado_res = codigo_empleado;
+                                document.getElementById("empleado_input_e").style.border = "1px solid #ccc";
+                            }
+                        } else {
+                            console.log("NO EXISTE");
+                            //$('#btn_empleado').trigger('click');
+                            $('#empleado_input_e').val("El empleado no existe");
+                        }
+                    } else {
+                        me.nombres = respuesta.empleado[0].primer_nombre+" "+respuesta.empleado[0].segundo_nombre;
+                        me.apellidos = respuesta.empleado[0].primer_apellido+" "+respuesta.empleado[0].segundo_apellido;
+                        me.codigo_empleado_res = codigo_empleado;
+                    }
+                    
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
+            
             selectProfesion(){
                 let me=this;
                 var url= '/profesiones/selectProfesion';
@@ -483,6 +612,7 @@
                 });
 
             },
+            
             selectDireccionMunicipio(){
                 let me=this;
                 var url= '/direccion_municipio/selectDireccionMunicipio';
@@ -660,6 +790,9 @@
                 })
              },
              validarEmpleado(){
+               var empleado_input = document.getElementById("empleado_input_e");
+               var rol_input = document.getElementById("rol_input_e");
+               var password_input =  document.getElementById("password_input_e");
                this.errorEmpleado=0;
                this.errorMostrarMsjEmpleado=[]; 
                if(!this.primer_nombre)this.errorMostrarMsjEmpleado.push("El Nombre de la Empleado no puede estar Vacio");
@@ -699,7 +832,9 @@
                    'detalles':this.detalles,
                    'codigo_municipio':this.codigo_municipio,
                    'codigo_departamento':this.codigo_departamento,
-                   'id_tipo_identificacion':this.id_tipo_identificacion
+                   'id_tipo_identificacion':this.id_tipo_identificacion,
+                   //'codigo_empleado':this.codigo_empleado,
+                   'codigo_jefe':this.codigo_empleado_res
                    
                    
                          
@@ -742,7 +877,9 @@
                    'detalles':this.detalles,
                    'codigo_municipio':this.codigo_municipio,
                    'codigo_departamento':this.codigo_departamento,
-                   'id_tipo_identificacion':this.id_tipo_identificacion
+                   'id_tipo_identificacion':this.id_tipo_identificacion,
+                   'codigo_empleado':this.codigo_empleado,
+                   'codigo_jefe':this.codigo_jefe
                    
 
                }).then(function (response) {
@@ -755,12 +892,20 @@
             },
             cerrarModal(){
                this.modal=0;
+               this.id_direccion='';
                this.tituloModal='';
                this.primer_nombre='';
                this.segundo_nombre='';
                this.primer_apellido='';
-               this.segundo_apellido=''
-            },
+               this.segundo_apellido='';
+               this.codigo_empleado_res = '';
+               this.codigo_jefe='';
+               this.empleado=[];
+                if(document.getElementById("empleado_input_e")!=null) document.getElementById("empleado_input_e").value = "";
+                if(document.getElementById("empleado_input_e")!=null) document.getElementById("empleado_input_e").style.border = "1px solid #ccc";
+                document.getElementById("rol_input_e").style.border = "1px solid #ccc";
+                if(document.getElementById("password_input_e")!=null) document.getElementById("password_input_e").style.border = "1px solid #ccc";
+                },
             abrirModal(modelo,accion,data=[]){
                 switch(modelo){
                     case "empleado":
@@ -794,6 +939,8 @@
                                           this.codigo_departamento=0;
                                           this.id_tipo_identificacion=0;
                                           this.id_tipo_contacto_telefonico=0;
+                                         
+                                          
                   
                   
 
@@ -829,6 +976,8 @@
                                          this.codigo_departamento=data['codigo_departamento'];
                                          this.id_tipo_identificacion=data['id_tipo_identificacion'];
                                          this.id_tipo_contacto_telefonico=data['id_tipo_contacto_telefonico']
+                                         this.codigo_empleado=data['codigo_empleado'];
+                                         this.codigo_jefe=data['codigo_jefe']
                                          
                                          
 
@@ -845,6 +994,7 @@
                 this.selectGenero();
                 this.selectContacto();
                 this.selectIdentificacion();
+                this.selectEmpleado();
                 
             }
         },

@@ -22,6 +22,7 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('propuesta2', require('./components/Propuesta2.vue').default);
 Vue.component('empleado', require('./components/Empleado.vue').default);
+
 Vue.component('rol', require('./components/Rol.vue').default);
 Vue.component('privilegio', require('./components/Privilegio.vue').default);
 Vue.component('usuario', require('./components/Usuario.vue').default);

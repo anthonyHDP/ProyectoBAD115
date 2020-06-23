@@ -8,7 +8,7 @@ class Empleado extends Model
 {
     protected $table = 'empleados';
     protected $primaryKey = 'codigo_empleado';
-    protected $fillable = ['primer_nombre', 'segundo_nombre','primer_apellido','segundo_apellido'];
+    protected $fillable = ['codigo_jefe','primer_nombre', 'segundo_nombre','primer_apellido','segundo_apellido'];
 
     public function generos()
     {

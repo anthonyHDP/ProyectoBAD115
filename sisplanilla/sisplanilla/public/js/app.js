@@ -1908,6 +1908,78 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+var _methods;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2292,11 +2364,14 @@ __webpack_require__.r(__webpack_exports__);
       identificador_isss: '',
       identificador_nup: '',
       identificador_nit: '',
+      codigo_empleado_res: '',
       ubicacion: '',
       numero: '',
       numero_vivienda: '',
       detalles: '',
       codigo_profesion: 0,
+      codigo_empleado: '',
+      codigo_jefe: '',
       id_direccion: 0,
       numero_documento_identificacion: 0,
       id_estado_civil: 0,
@@ -2307,6 +2382,7 @@ __webpack_require__.r(__webpack_exports__);
       codigo_departamento: 0,
       id_tipo_identificacion: 0,
       arraycodigo_profesion: [],
+      arraycodigo_empleado: [],
       arrayid_direccion: [],
       arrayEmpleado: [],
       arrayid_estado_civil: [],
@@ -2366,7 +2442,7 @@ __webpack_require__.r(__webpack_exports__);
       return pagesArray;
     }
   },
-  methods: {
+  methods: (_methods = {
     listarEmpleado: function listarEmpleado(page, buscar, criterio) {
       var me = this;
       var url = '/empleado?page=' + page + '&buscar=' + buscar + '&criterio=' + criterio;
@@ -2378,333 +2454,388 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
-    selectProfesion: function selectProfesion() {
+    selectEmpleado: function selectEmpleado() {
       var me = this;
-      var url = '/profesiones/selectProfesion';
+      var url = '/empleados/selectEmpleado';
       axios.get(url).then(function (response) {
         //console.log(response);
         var respuesta = response.data;
-        me.arraycodigo_profesion = respuesta.profesiones;
+        me.arraycodigo_empleado = respuesta.empleados_jefe;
       })["catch"](function (error) {
         console.log(error);
       });
-    },
-    selectDireccionMunicipio: function selectDireccionMunicipio() {
-      var me = this;
-      var url = '/direccion_municipio/selectDireccionMunicipio';
-      axios.get(url).then(function (response) {
-        //console.log(response);
-        var respuesta = response.data;
-        me.arraycodigo_municipio = respuesta.direccion_municipios;
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    },
-    selectDireccionDepartamento: function selectDireccionDepartamento() {
-      var me = this;
-      var url = '/direccion_departamento/selectDireccionDepartamento';
-      axios.get(url).then(function (response) {
-        //console.log(response);
-        var respuesta = response.data;
-        me.arraycodigo_departamento = respuesta.direccion_departamentos;
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    },
-    selectEstadoCivil: function selectEstadoCivil() {
-      var me = this;
-      var url = '/estados_civiles/selectEstadoCivil';
-      axios.get(url).then(function (response) {
-        //console.log(response);
-        var respuesta = response.data;
-        me.arrayid_estado_civil = respuesta.Estados_Civiles;
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    },
-    selectGenero: function selectGenero() {
-      var me = this;
-      var url = '/generos/selectGenero';
-      axios.get(url).then(function (response) {
-        //console.log(response);
-        var respuesta = response.data;
-        me.arraygenero = respuesta.generos;
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    },
-    selectContacto: function selectContacto() {
-      var me = this;
-      var url = '/tipo_contacto_telefonico/selectContacto';
-      axios.get(url).then(function (response) {
-        //console.log(response);
-        var respuesta = response.data;
-        me.arrayid_tipo_contacto_telefonico = respuesta.contactos;
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    },
-    selectIdentificacion: function selectIdentificacion() {
-      var me = this;
-      var url = '/tipos_identificacion/selectIdentificacion';
-      axios.get(url).then(function (response) {
-        //console.log(response);
-        var respuesta = response.data;
-        me.arrayid_tipo_identificacion = respuesta.identificaciones;
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    },
-    cambiarPagina: function cambiarPagina(page, buscar, criterio) {
-      var me = this; //Actualizar la Pagina Actual
-
-      me.pagination.current_page = page; //Envia la Peticion para visualizar la data de esa Pagina
-
-      me.listarEmpleado(page, buscar, criterio);
-    },
-    desactivarEmpleado: function desactivarEmpleado(id) {
-      var _this = this;
-
-      var swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-          confirmButton: 'btn btn-success',
-          cancelButton: 'btn btn-danger'
-        },
-        buttonsStyling: false
-      });
-      swalWithBootstrapButtons.fire({
-        title: 'Esta seguro de desactivar esta Empleado?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Aceptar',
-        cancelButtonText: 'Cancelar',
-        reverseButtons: true
-      }).then(function (result) {
-        if (result.value) {
-          var me = _this;
-          axios.put('/empleado/desactivar', {
-            'id': id
-          }).then(function (response) {
-            me.listarEmpleado(1, '', 'primer_nombre');
-            swalWithBootstrapButtons.fire('Desactivado!', 'El Registro ha sido desactivado con Exito.', 'success');
-          })["catch"](function (error) {
-            console.log(error);
-          });
-        } else if (
-        /* Read more about handling dismissals below */
-        result.dismiss === Swal.DismissReason.cancel) {
-          swalWithBootstrapButtons.fire('Operacion Cancelada', 'La Operacion ah sido Cancelada con Exito :)', 'error');
-        }
-      });
-    },
-    activarEmpleado: function activarEmpleado(id) {
-      var _this2 = this;
-
-      var swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-          confirmButton: 'btn btn-success',
-          cancelButton: 'btn btn-danger'
-        },
-        buttonsStyling: false
-      });
-      swalWithBootstrapButtons.fire({
-        title: 'Esta seguro de Activar esta Empleado?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Aceptar',
-        cancelButtonText: 'Cancelar',
-        reverseButtons: true
-      }).then(function (result) {
-        if (result.value) {
-          var me = _this2;
-          axios.put('/empleado/activar', {
-            'id': id
-          }).then(function (response) {
-            me.listarEmpleado(1, '', 'primer_nombre');
-            swalWithBootstrapButtons.fire('Ativado!', 'El Registro ha sido activado con Exito.', 'success');
-          })["catch"](function (error) {
-            console.log(error);
-          });
-        } else if (
-        /* Read more about handling dismissals below */
-        result.dismiss === Swal.DismissReason.cancel) {
-          swalWithBootstrapButtons.fire('Operacion Cancelada', 'La Operacion ah sido Cancelada con Exito :)', 'error');
-        }
-      });
-    },
-    validarEmpleado: function validarEmpleado() {
-      this.errorEmpleado = 0;
-      this.errorMostrarMsjEmpleado = [];
-      if (!this.primer_nombre) this.errorMostrarMsjEmpleado.push("El Nombre de la Empleado no puede estar Vacio");
-      if (this.errorMostrarMsjEmpleado.length) this.errorEmpleado = 1;
-      return this.errorEmpleado;
-    },
-    registrarEmpleado: function registrarEmpleado() {
-      if (this.validarEmpleado()) {
-        return;
-      }
-
-      var me = this;
-      axios.post('/empleado/registrar', {
-        'primer_nombre': this.primer_nombre,
-        'segundo_nombre': this.segundo_nombre,
-        'primer_apellido': this.primer_apellido,
-        'segundo_apellido': this.segundo_apellido,
-        'email_personal': this.email_personal,
-        'email_institucional': this.email_institucional,
-        'fecha_nacimiento': this.fecha_nacimiento,
-        'identificador_isss': this.identificador_isss,
-        'identificador_nup': this.identificador_nup,
-        'identificador_nit': this.identificador_nit,
-        'codigo_profesion': this.codigo_profesion,
-        'id_direccion': this.id_direccion,
-        'numero_documento_identificacion': this.numero_documento_identificacion,
-        'id_estado_civil': this.id_estado_civil,
-        'id_genero': this.id_genero,
-        'id_contacto_telefonico': this.id_contacto_telefonico,
-        'id_tipo_contacto_telefonico': this.id_tipo_contacto_telefonico,
-        'ubicacion': this.ubicacion,
-        'numero_vivienda': this.numero_vivienda,
-        'numero': this.numero,
-        'detalles': this.detalles,
-        'codigo_municipio': this.codigo_municipio,
-        'codigo_departamento': this.codigo_departamento,
-        'id_tipo_identificacion': this.id_tipo_identificacion
-      }).then(function (response) {
-        me.cerrarModal();
-        me.listarEmpleado(1, '', 'primer_nombre');
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    },
-    actualizarEmpleado: function actualizarEmpleado() {
-      if (this.validarEmpleado()) {
-        return;
-      }
-
-      var me = this;
-      axios.put('/empleado/actualizar', {
-        'primer_nombre': this.primer_nombre,
-        'segundo_nombre': this.segundo_nombre,
-        'primer_apellido': this.primer_apellido,
-        'segundo_apellido': this.segundo_apellido,
-        'email_personal': this.email_personal,
-        'email_institucional': this.email_institucional,
-        'fecha_nacimiento': this.fecha_nacimiento,
-        'identificador_isss': this.identificador_isss,
-        'identificador_nup': this.identificador_nup,
-        'identificador_nit': this.identificador_nit,
-        'codigo_profesion': this.codigo_profesion,
-        'id_direccion': this.id_direccion,
-        'numero_documento_identificacion': this.numero_documento_identificacion,
-        'id_estado_civil': this.id_estado_civil,
-        'id_genero': this.id_genero,
-        'id_contacto_telefonico': this.id_contacto_telefonico,
-        'id_tipo_contacto_telefonico': this.id_tipo_contacto_telefonico,
-        'ubicacion': this.ubicacion,
-        'numero_vivienda': this.numero_vivienda,
-        'numero': this.numero,
-        'detalles': this.detalles,
-        'codigo_municipio': this.codigo_municipio,
-        'codigo_departamento': this.codigo_departamento,
-        'id_tipo_identificacion': this.id_tipo_identificacion
-      }).then(function (response) {
-        me.cerrarModal();
-        me.listarEmpleado(1, '', 'primer_nombre');
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    },
-    cerrarModal: function cerrarModal() {
-      this.modal = 0;
-      this.tituloModal = '';
-      this.primer_nombre = '';
-      this.segundo_nombre = '';
-      this.primer_apellido = '';
-      this.segundo_apellido = '';
-    },
-    abrirModal: function abrirModal(modelo, accion) {
-      var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-
-      switch (modelo) {
-        case "empleado":
-          {
-            switch (accion) {
-              case 'registrar':
-                {
-                  this.modal = 1;
-                  this.tituloModal = 'Registrar Empleado';
-                  this.primer_nombre = '';
-                  this.segundo_nombre = '';
-                  this.primer_apellido = '';
-                  this.segundo_apellido = '', this.email_personal = '';
-                  this.email_institucional = '';
-                  this.fecha_nacimiento = '';
-                  this.identificador_isss = '';
-                  this.identificador_nup = '';
-                  this.identificador_nit = '';
-                  this.codigo_profesion = 0;
-                  this.id_direccion = 0;
-                  this.numero_documento_identificacion = 0;
-                  this.id_estado_civil = 0;
-                  this.id_genero = 0;
-                  this.id_contacto_telefonico = 0;
-                  this.ubicacion = '';
-                  this.numero_vivienda = '';
-                  this.numero = '';
-                  this.detalles = '';
-                  this.codigo_municipio = 0;
-                  this.codigo_departamento = 0;
-                  this.id_tipo_identificacion = 0;
-                  this.id_tipo_contacto_telefonico = 0;
-                  this.tipoAccion = 1;
-                  break;
-                }
-
-              case 'actualizar':
-                {
-                  //console.log(data);
-                  this.modal = 2;
-                  this.tituloModal = 'Actualizar Empleado';
-                  this.tipoAccion = 2;
-                  this.primer_nombre = data['primer_nombre'];
-                  this.segundo_nombre = data['segundo_nombre'];
-                  this.primer_apellido = data['primer_apellido'];
-                  this.segundo_apellido = data['segundo_apellido'];
-                  this.email_personal = data['email_personal'];
-                  this.email_institucional = data['email_institucional'];
-                  this.fecha_nacimiento = data['fecha_nacimiento'];
-                  this.identificador_isss = data['identificador_isss'];
-                  this.identificador_nup = data['identificador_nit'];
-                  this.identificador_nit = data['identificador_nit'];
-                  this.codigo_profesion = data['codigo_profesion'];
-                  this.id_direccion = data['id_direccion'];
-                  this.numero_documento_identificacion = data['numero_documento_identificacion'];
-                  this.id_estado_civil = data['id_estado_civil'];
-                  this.id_genero = data['id_genero'];
-                  this.id_contacto_telefonico = data['id_contacto_telefonico'];
-                  this.ubicacion = data['ubicacion'];
-                  this.numero_vivienda = data['numero_vivienda'];
-                  this.detalles = data['detalles'];
-                  this.codigo_municipio = data['codigo_municipio'];
-                  this.codigo_departamento = data['codigo_departamento'];
-                  this.id_tipo_identificacion = data['id_tipo_identificacion'];
-                  this.id_tipo_contacto_telefonico = data['id_tipo_contacto_telefonico'];
-                  break;
-                }
-            }
-          }
-      }
-
-      this.selectProfesion();
-      this.selectDireccionMunicipio();
-      this.selectDireccionDepartamento();
-      this.selectEstadoCivil();
-      this.selectGenero();
-      this.selectContacto();
-      this.selectIdentificacion();
     }
-  },
+  }, _defineProperty(_methods, "selectEmpleado", function selectEmpleado(codigo_empleado) {
+    var me = this;
+    var url = '/empleado/selectEmpleado?codigo_empleado=' + codigo_empleado;
+    axios.get(url).then(function (response) {
+      var respuesta = response.data;
+      me.nombres = '';
+      me.apellidos = '';
+      me.codigo_empleado_res = '';
+      console.log("TIPO EMPLEADO[0]: " + _typeof(response.data.empleado[0]));
+      console.log("RESPONSE " + response);
+      console.log("DATA: " + response.data);
+      console.log("EMPLEADO: " + response.data.empleado[0]);
+
+      if (me.tipoAccion == 1) {
+        if (response.data.empleado[0] !== null && typeof response.data.empleado[0] !== 'undefined') {
+          console.log('BANDERA: ' + response.data.bandera);
+
+          if (response.data.bandera != 0) {
+            me.nombres = respuesta.empleado[0].primer_nombre + " " + respuesta.empleado[0].segundo_nombre;
+            me.apellidos = respuesta.empleado[0].primer_apellido + " " + respuesta.empleado[0].segundo_apellido;
+            me.codigo_empleado_res = codigo_empleado;
+            document.getElementById("empleado_input_e").style.border = "1px solid #ccc";
+          } else {
+            me.nombres = respuesta.empleado[0].primer_nombre + " " + respuesta.empleado[0].segundo_nombre;
+            me.apellidos = respuesta.empleado[0].primer_apellido + " " + respuesta.empleado[0].segundo_apellido;
+            me.codigo_empleado_res = codigo_empleado;
+            document.getElementById("empleado_input_e").style.border = "1px solid #ccc";
+          }
+        } else {
+          console.log("NO EXISTE"); //$('#btn_empleado').trigger('click');
+
+          $('#empleado_input_e').val("El empleado no existe");
+        }
+      } else {
+        me.nombres = respuesta.empleado[0].primer_nombre + " " + respuesta.empleado[0].segundo_nombre;
+        me.apellidos = respuesta.empleado[0].primer_apellido + " " + respuesta.empleado[0].segundo_apellido;
+        me.codigo_empleado_res = codigo_empleado;
+      }
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  }), _defineProperty(_methods, "selectProfesion", function selectProfesion() {
+    var me = this;
+    var url = '/profesiones/selectProfesion';
+    axios.get(url).then(function (response) {
+      //console.log(response);
+      var respuesta = response.data;
+      me.arraycodigo_profesion = respuesta.profesiones;
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  }), _defineProperty(_methods, "selectDireccionMunicipio", function selectDireccionMunicipio() {
+    var me = this;
+    var url = '/direccion_municipio/selectDireccionMunicipio';
+    axios.get(url).then(function (response) {
+      //console.log(response);
+      var respuesta = response.data;
+      me.arraycodigo_municipio = respuesta.direccion_municipios;
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  }), _defineProperty(_methods, "selectDireccionDepartamento", function selectDireccionDepartamento() {
+    var me = this;
+    var url = '/direccion_departamento/selectDireccionDepartamento';
+    axios.get(url).then(function (response) {
+      //console.log(response);
+      var respuesta = response.data;
+      me.arraycodigo_departamento = respuesta.direccion_departamentos;
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  }), _defineProperty(_methods, "selectEstadoCivil", function selectEstadoCivil() {
+    var me = this;
+    var url = '/estados_civiles/selectEstadoCivil';
+    axios.get(url).then(function (response) {
+      //console.log(response);
+      var respuesta = response.data;
+      me.arrayid_estado_civil = respuesta.Estados_Civiles;
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  }), _defineProperty(_methods, "selectGenero", function selectGenero() {
+    var me = this;
+    var url = '/generos/selectGenero';
+    axios.get(url).then(function (response) {
+      //console.log(response);
+      var respuesta = response.data;
+      me.arraygenero = respuesta.generos;
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  }), _defineProperty(_methods, "selectContacto", function selectContacto() {
+    var me = this;
+    var url = '/tipo_contacto_telefonico/selectContacto';
+    axios.get(url).then(function (response) {
+      //console.log(response);
+      var respuesta = response.data;
+      me.arrayid_tipo_contacto_telefonico = respuesta.contactos;
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  }), _defineProperty(_methods, "selectIdentificacion", function selectIdentificacion() {
+    var me = this;
+    var url = '/tipos_identificacion/selectIdentificacion';
+    axios.get(url).then(function (response) {
+      //console.log(response);
+      var respuesta = response.data;
+      me.arrayid_tipo_identificacion = respuesta.identificaciones;
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  }), _defineProperty(_methods, "cambiarPagina", function cambiarPagina(page, buscar, criterio) {
+    var me = this; //Actualizar la Pagina Actual
+
+    me.pagination.current_page = page; //Envia la Peticion para visualizar la data de esa Pagina
+
+    me.listarEmpleado(page, buscar, criterio);
+  }), _defineProperty(_methods, "desactivarEmpleado", function desactivarEmpleado(id) {
+    var _this = this;
+
+    var swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    });
+    swalWithBootstrapButtons.fire({
+      title: 'Esta seguro de desactivar esta Empleado?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: true
+    }).then(function (result) {
+      if (result.value) {
+        var me = _this;
+        axios.put('/empleado/desactivar', {
+          'id': id
+        }).then(function (response) {
+          me.listarEmpleado(1, '', 'primer_nombre');
+          swalWithBootstrapButtons.fire('Desactivado!', 'El Registro ha sido desactivado con Exito.', 'success');
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      } else if (
+      /* Read more about handling dismissals below */
+      result.dismiss === Swal.DismissReason.cancel) {
+        swalWithBootstrapButtons.fire('Operacion Cancelada', 'La Operacion ah sido Cancelada con Exito :)', 'error');
+      }
+    });
+  }), _defineProperty(_methods, "activarEmpleado", function activarEmpleado(id) {
+    var _this2 = this;
+
+    var swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    });
+    swalWithBootstrapButtons.fire({
+      title: 'Esta seguro de Activar esta Empleado?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: true
+    }).then(function (result) {
+      if (result.value) {
+        var me = _this2;
+        axios.put('/empleado/activar', {
+          'id': id
+        }).then(function (response) {
+          me.listarEmpleado(1, '', 'primer_nombre');
+          swalWithBootstrapButtons.fire('Ativado!', 'El Registro ha sido activado con Exito.', 'success');
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      } else if (
+      /* Read more about handling dismissals below */
+      result.dismiss === Swal.DismissReason.cancel) {
+        swalWithBootstrapButtons.fire('Operacion Cancelada', 'La Operacion ah sido Cancelada con Exito :)', 'error');
+      }
+    });
+  }), _defineProperty(_methods, "validarEmpleado", function validarEmpleado() {
+    var empleado_input = document.getElementById("empleado_input_e");
+    var rol_input = document.getElementById("rol_input_e");
+    var password_input = document.getElementById("password_input_e");
+    this.errorEmpleado = 0;
+    this.errorMostrarMsjEmpleado = [];
+    if (!this.primer_nombre) this.errorMostrarMsjEmpleado.push("El Nombre de la Empleado no puede estar Vacio");
+    if (this.errorMostrarMsjEmpleado.length) this.errorEmpleado = 1;
+    return this.errorEmpleado;
+  }), _defineProperty(_methods, "registrarEmpleado", function registrarEmpleado() {
+    if (this.validarEmpleado()) {
+      return;
+    }
+
+    var me = this;
+    axios.post('/empleado/registrar', {
+      'primer_nombre': this.primer_nombre,
+      'segundo_nombre': this.segundo_nombre,
+      'primer_apellido': this.primer_apellido,
+      'segundo_apellido': this.segundo_apellido,
+      'email_personal': this.email_personal,
+      'email_institucional': this.email_institucional,
+      'fecha_nacimiento': this.fecha_nacimiento,
+      'identificador_isss': this.identificador_isss,
+      'identificador_nup': this.identificador_nup,
+      'identificador_nit': this.identificador_nit,
+      'codigo_profesion': this.codigo_profesion,
+      'id_direccion': this.id_direccion,
+      'numero_documento_identificacion': this.numero_documento_identificacion,
+      'id_estado_civil': this.id_estado_civil,
+      'id_genero': this.id_genero,
+      'id_contacto_telefonico': this.id_contacto_telefonico,
+      'id_tipo_contacto_telefonico': this.id_tipo_contacto_telefonico,
+      'ubicacion': this.ubicacion,
+      'numero_vivienda': this.numero_vivienda,
+      'numero': this.numero,
+      'detalles': this.detalles,
+      'codigo_municipio': this.codigo_municipio,
+      'codigo_departamento': this.codigo_departamento,
+      'id_tipo_identificacion': this.id_tipo_identificacion,
+      //'codigo_empleado':this.codigo_empleado,
+      'codigo_jefe': this.codigo_empleado_res
+    }).then(function (response) {
+      me.cerrarModal();
+      me.listarEmpleado(1, '', 'primer_nombre');
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  }), _defineProperty(_methods, "actualizarEmpleado", function actualizarEmpleado() {
+    if (this.validarEmpleado()) {
+      return;
+    }
+
+    var me = this;
+    axios.put('/empleado/actualizar', {
+      'primer_nombre': this.primer_nombre,
+      'segundo_nombre': this.segundo_nombre,
+      'primer_apellido': this.primer_apellido,
+      'segundo_apellido': this.segundo_apellido,
+      'email_personal': this.email_personal,
+      'email_institucional': this.email_institucional,
+      'fecha_nacimiento': this.fecha_nacimiento,
+      'identificador_isss': this.identificador_isss,
+      'identificador_nup': this.identificador_nup,
+      'identificador_nit': this.identificador_nit,
+      'codigo_profesion': this.codigo_profesion,
+      'id_direccion': this.id_direccion,
+      'numero_documento_identificacion': this.numero_documento_identificacion,
+      'id_estado_civil': this.id_estado_civil,
+      'id_genero': this.id_genero,
+      'id_contacto_telefonico': this.id_contacto_telefonico,
+      'id_tipo_contacto_telefonico': this.id_tipo_contacto_telefonico,
+      'ubicacion': this.ubicacion,
+      'numero_vivienda': this.numero_vivienda,
+      'numero': this.numero,
+      'detalles': this.detalles,
+      'codigo_municipio': this.codigo_municipio,
+      'codigo_departamento': this.codigo_departamento,
+      'id_tipo_identificacion': this.id_tipo_identificacion,
+      'codigo_empleado': this.codigo_empleado,
+      'codigo_jefe': this.codigo_jefe
+    }).then(function (response) {
+      me.cerrarModal();
+      me.listarEmpleado(1, '', 'primer_nombre');
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  }), _defineProperty(_methods, "cerrarModal", function cerrarModal() {
+    this.modal = 0;
+    this.id_direccion = '';
+    this.tituloModal = '';
+    this.primer_nombre = '';
+    this.segundo_nombre = '';
+    this.primer_apellido = '';
+    this.segundo_apellido = '';
+    this.codigo_empleado_res = '';
+    this.codigo_jefe = '';
+    this.empleado = [];
+    if (document.getElementById("empleado_input_e") != null) document.getElementById("empleado_input_e").value = "";
+    if (document.getElementById("empleado_input_e") != null) document.getElementById("empleado_input_e").style.border = "1px solid #ccc";
+    document.getElementById("rol_input_e").style.border = "1px solid #ccc";
+    if (document.getElementById("password_input_e") != null) document.getElementById("password_input_e").style.border = "1px solid #ccc";
+  }), _defineProperty(_methods, "abrirModal", function abrirModal(modelo, accion) {
+    var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+
+    switch (modelo) {
+      case "empleado":
+        {
+          switch (accion) {
+            case 'registrar':
+              {
+                this.modal = 1;
+                this.tituloModal = 'Registrar Empleado';
+                this.primer_nombre = '';
+                this.segundo_nombre = '';
+                this.primer_apellido = '';
+                this.segundo_apellido = '', this.email_personal = '';
+                this.email_institucional = '';
+                this.fecha_nacimiento = '';
+                this.identificador_isss = '';
+                this.identificador_nup = '';
+                this.identificador_nit = '';
+                this.codigo_profesion = 0;
+                this.id_direccion = 0;
+                this.numero_documento_identificacion = 0;
+                this.id_estado_civil = 0;
+                this.id_genero = 0;
+                this.id_contacto_telefonico = 0;
+                this.ubicacion = '';
+                this.numero_vivienda = '';
+                this.numero = '';
+                this.detalles = '';
+                this.codigo_municipio = 0;
+                this.codigo_departamento = 0;
+                this.id_tipo_identificacion = 0;
+                this.id_tipo_contacto_telefonico = 0;
+                this.tipoAccion = 1;
+                break;
+              }
+
+            case 'actualizar':
+              {
+                //console.log(data);
+                this.modal = 2;
+                this.tituloModal = 'Actualizar Empleado';
+                this.tipoAccion = 2;
+                this.primer_nombre = data['primer_nombre'];
+                this.segundo_nombre = data['segundo_nombre'];
+                this.primer_apellido = data['primer_apellido'];
+                this.segundo_apellido = data['segundo_apellido'];
+                this.email_personal = data['email_personal'];
+                this.email_institucional = data['email_institucional'];
+                this.fecha_nacimiento = data['fecha_nacimiento'];
+                this.identificador_isss = data['identificador_isss'];
+                this.identificador_nup = data['identificador_nit'];
+                this.identificador_nit = data['identificador_nit'];
+                this.codigo_profesion = data['codigo_profesion'];
+                this.id_direccion = data['id_direccion'];
+                this.numero_documento_identificacion = data['numero_documento_identificacion'];
+                this.id_estado_civil = data['id_estado_civil'];
+                this.id_genero = data['id_genero'];
+                this.id_contacto_telefonico = data['id_contacto_telefonico'];
+                this.ubicacion = data['ubicacion'];
+                this.numero_vivienda = data['numero_vivienda'];
+                this.detalles = data['detalles'];
+                this.codigo_municipio = data['codigo_municipio'];
+                this.codigo_departamento = data['codigo_departamento'];
+                this.id_tipo_identificacion = data['id_tipo_identificacion'];
+                this.id_tipo_contacto_telefonico = data['id_tipo_contacto_telefonico'];
+                this.codigo_empleado = data['codigo_empleado'];
+                this.codigo_jefe = data['codigo_jefe'];
+                break;
+              }
+          }
+        }
+    }
+
+    this.selectProfesion();
+    this.selectDireccionMunicipio();
+    this.selectDireccionDepartamento();
+    this.selectEstadoCivil();
+    this.selectGenero();
+    this.selectContacto();
+    this.selectIdentificacion();
+    this.selectEmpleado();
+  }), _methods),
   mounted: function mounted() {
     this.listarEmpleado(1, this.buscar, this.criterio);
   }
@@ -30639,63 +30770,13 @@ var render = function() {
               _c(
                 "tbody",
                 _vm._l(_vm.arrayEmpleado, function(empleado) {
-                  return _c("tr", { key: empleado.id }, [
-                    _c(
-                      "td",
-                      { staticStyle: { "text-aling": "center" } },
-                      [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-warning btn-sm",
-                            attrs: { type: "button" },
-                            on: {
-                              click: function($event) {
-                                return _vm.abrirModal(
-                                  "empleado",
-                                  "actualizar",
-                                  empleado
-                                )
-                              }
-                            }
-                          },
-                          [_c("i", { staticClass: "icon-pencil" })]
-                        ),
-                        _vm._v("  \n                                "),
-                        empleado.condicion
-                          ? [
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-danger btn-sm",
-                                  attrs: { type: "button" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.desactivarEmpleado(empleado.id)
-                                    }
-                                  }
-                                },
-                                [_c("i", { staticClass: "icon-trash" })]
-                              )
-                            ]
-                          : [
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-info btn-sm",
-                                  attrs: { type: "button" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.activarEmpleado(empleado.id)
-                                    }
-                                  }
-                                },
-                                [_c("i", { staticClass: "icon-check" })]
-                              )
-                            ]
-                      ],
-                      2
-                    ),
+                  return _c("tr", { key: empleado.codigo_empleado }, [
+                    _c("td", {
+                      staticStyle: { "text-align": "center" },
+                      domProps: {
+                        textContent: _vm._s(empleado.codigo_empleado)
+                      }
+                    }),
                     _vm._v(" "),
                     _c("td", {
                       domProps: { textContent: _vm._s(empleado.primer_nombre) }
@@ -30727,18 +30808,47 @@ var render = function() {
                       }
                     }),
                     _vm._v(" "),
-                    _c("td", [
-                      empleado.condicion
-                        ? _c("div", [
-                            _c("span", { staticClass: "badge badge-success" }, [
-                              _vm._v("Activo")
-                            ])
-                          ])
-                        : _c("div", [
-                            _c("span", { staticClass: "badge badge-danger" }, [
-                              _vm._v("Desactivado")
-                            ])
-                          ])
+                    empleado.activo == "1"
+                      ? _c("td", [_vm._v("Sí")])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    empleado.activo == "0"
+                      ? _c("td", [_vm._v("No")])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("td", { staticStyle: { "text-align": "center" } }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "btn btn-warning btn-sm btn-circle-text-white",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              return _vm.abrirModal(
+                                "empleado",
+                                "actualizar",
+                                _vm.usuario
+                              )
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "icon-pencil" })]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-danger btn-sm btn-circle",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              return _vm.abrirModalEliminar(empleado)
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "icon-trash" })]
+                      )
                     ])
                   ])
                 }),
@@ -31692,7 +31802,7 @@ var render = function() {
                                     ],
                                     staticClass: "form-control",
                                     attrs: {
-                                      type: "text",
+                                      type: "date",
                                       placeholder:
                                         "Ingresela en el formato dd-mm-yyy"
                                     },
@@ -31915,7 +32025,7 @@ var render = function() {
                                     _c(
                                       "label",
                                       { attrs: { for: "text_input" } },
-                                      [_vm._v("Codigo de profesion")]
+                                      [_vm._v(" Profesion")]
                                     ),
                                     _vm._v(" "),
                                     _c(
@@ -31959,11 +32069,7 @@ var render = function() {
                                           {
                                             attrs: { value: "0", selected: "" }
                                           },
-                                          [
-                                            _vm._v(
-                                              "-- Seleccione el codigo de profesion --"
-                                            )
-                                          ]
+                                          [_vm._v("-- Seleccione Profesion --")]
                                         ),
                                         _vm._v(" "),
                                         _vm._l(
@@ -32079,6 +32185,159 @@ var render = function() {
                             {
                               staticClass: "tab-pane fade",
                               attrs: {
+                                id: "v-pills-settings_codigo_jefe",
+                                role: "tabpanel",
+                                "aria-labelledby":
+                                  "v-pills-profile_settings_codigo_jefe-tab"
+                              }
+                            },
+                            [
+                              _vm.tipoAccion == 1
+                                ? _c("div", { staticClass: "form-group" }, [
+                                    _c("label", { attrs: { for: "text" } }, [
+                                      _vm._v(
+                                        "Buscar empleado por codigo-Asignacion-Jefe"
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "row",
+                                        staticStyle: { "margin-left": "0.45%" }
+                                      },
+                                      [
+                                        _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: _vm.codigo_empleado,
+                                              expression: "codigo_empleado"
+                                            }
+                                          ],
+                                          staticClass: "form-control col-md-3",
+                                          attrs: {
+                                            maxlength: "6",
+                                            type: "text",
+                                            placeholder: "Ej. AA1000"
+                                          },
+                                          domProps: {
+                                            value: _vm.codigo_empleado
+                                          },
+                                          on: {
+                                            input: function($event) {
+                                              if ($event.target.composing) {
+                                                return
+                                              }
+                                              _vm.codigo_empleado =
+                                                $event.target.value
+                                            }
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass:
+                                              "btn btn-success btn-buscar",
+                                            attrs: {
+                                              id: "btn_empleado",
+                                              type: "button"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.selectEmpleado(
+                                                  _vm.codigo_empleado
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "fa fa-search"
+                                            })
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          staticClass: "form-control col-sm-7",
+                                          staticStyle: {
+                                            "font-style": "italic",
+                                            "margin-left": "5.5%",
+                                            border: "0",
+                                            "border-radius": "6px",
+                                            background: "#eee"
+                                          },
+                                          attrs: {
+                                            id: "empleado_input_e",
+                                            type: "text",
+                                            disabled: ""
+                                          },
+                                          domProps: {
+                                            value:
+                                              _vm.nombres +
+                                              " " +
+                                              _vm.apellidos +
+                                              "      " +
+                                              _vm.codigo_empleado_res
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "help-block",
+                                            staticStyle: {
+                                              "font-size": "80%",
+                                              "margin-top": "1%"
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "(*) Debe consultar el codigo de empleado y si existe, se asociara el jefe al Empleado a registrar"
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _vm.tipoAccion == 2
+                                ? _c("div", { staticClass: "form-group" }, [
+                                    _c("label", { attrs: { for: "text" } }, [
+                                      _vm._v("Empleado")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      staticClass: "form-control",
+                                      staticStyle: {
+                                        "font-style": "italic",
+                                        border: "0",
+                                        "border-radius": "6px",
+                                        background: "#eee"
+                                      },
+                                      attrs: { type: "text", disabled: "" },
+                                      domProps: {
+                                        value:
+                                          _vm.nombres +
+                                          " " +
+                                          _vm.apellidos +
+                                          "      " +
+                                          _vm.codigo_empleado_res
+                                      }
+                                    })
+                                  ])
+                                : _vm._e()
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass: "tab-pane fade",
+                              attrs: {
                                 id: "v-pills-settings_contrato",
                                 role: "tabpanel",
                                 "aria-labelledby":
@@ -32146,7 +32405,7 @@ var render = function() {
                                     ],
                                     staticClass: "form-control",
                                     attrs: {
-                                      type: "text",
+                                      type: "date",
                                       placeholder: "Ingrese Fecha Inicial"
                                     },
                                     domProps: {
@@ -32412,7 +32671,9 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [_vm._v("Opciones")]),
+        _c("th", { staticStyle: { "text-align": "center" } }, [_vm._v("ID")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Codigo Empleado")]),
         _vm._v(" "),
         _c("th", [_vm._v("Primer Nombre")]),
         _vm._v(" "),
@@ -32426,7 +32687,11 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Email-Institucional")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Estado")])
+        _c("th", [_vm._v("Estado")]),
+        _vm._v(" "),
+        _c("th", { staticStyle: { "text-align": "center" } }, [
+          _vm._v("Opciones")
+        ])
       ])
     ])
   },
@@ -32508,6 +32773,22 @@ var staticRenderFns = [
               }
             },
             [_vm._v("Ingreso de Datos de Empleados")]
+          ),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "nav-link",
+              attrs: {
+                id: "v-pills-settings_codigo_jefe-tab",
+                "data-toggle": "pill",
+                href: "#v-pills-settings_codigo_jefe",
+                role: "tab",
+                "aria-controls": "v-pills-settings_codigo_jefe",
+                "aria-selected": "false"
+              }
+            },
+            [_vm._v("Asignacion de Jefe")]
           ),
           _vm._v(" "),
           _c(

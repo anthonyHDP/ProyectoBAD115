@@ -26,9 +26,9 @@ class CreateEmpleadosTable extends Migration
             $table->char('identificador_isss',9)->unique();
             $table->char('identificador_nup',12)->unique();
             $table->char('identificador_nit',14)->unique();
-            $table->char('codigo_profesion',6)->unsigned();
+            $table->integer('codigo_profesion')->unsigned();
             $table->integer('id_direccion')->unsigned();
-            $table->integer('numero_documento_identificacion',9)->unsigned();
+            $table->integer('numero_documento_identificacion')->unsigned();
             $table->integer('id_estado_civil')->unsigned();
             $table->integer('id_genero')->unsigned();
             $table->integer('id_contacto_telefonico')->unsigned();
@@ -43,9 +43,11 @@ class CreateEmpleadosTable extends Migration
             $table->foreign('id_genero')->references('id_genero')->on('generos');
             $table->foreign('id_contacto_telefonico')->references('id_contacto_telefonico')->on('contactos_telefonicos');
         });
-
         
-      
+        DB::table('empleados')->insert(array('codigo_empleado'=>'EMP001', 'codigo_jefe'=>'EMP001', 'primer_nombre'=>'Edwin', 'segundo_nombre'=>'Jose', 'primer_apellido'=>'Molina', 'segundo_apellido'=>'Aleman',
+        'email_personal'=>'email', 'email_institucional'=>'email','fecha_nacimiento'=>'15/06/20', 'identificador_isss'=>'987979', 'identificador_nup'=>'8788887', 'identificador_nit'=>'899797', 'codigo_profesion'=>'1', 'id_direccion'=>'1',
+        'numero_documento_identificacion'=>'9898789', 'id_estado_civil'=>'1', 'id_genero'=>'1', 'id_contacto_telefonico'=>'1'));
+        
     }
 
     /**

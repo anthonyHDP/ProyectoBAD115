@@ -21,6 +21,7 @@ class CreateContactosTelefonicosTable extends Migration
 
             $table->foreign('id_tipo_contacto_telefonico')->references('id_tipo_contacto_telefonico')->on('tipos_contacto_telefonico');
         });
+        DB::table('contactos_telefonicos')->insert(array('id_contacto_telefonico'=>'1', 'id_tipo_contacto_telefonico'=>'1', 'numero'=>'78963289'));
     }
 
     /**

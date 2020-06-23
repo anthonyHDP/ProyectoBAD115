@@ -48,3 +48,8 @@ Route::get('/direccion_municipio/selectDireccionMunicipio', 'EmpleadoController@
 Route::get('/direccion_departamento/selectDireccionDepartamento', 'EmpleadoController@selectDireccionDepartamento');
 Route::get('/tipos_identificacion/selectIdentificacion', 'EmpleadoController@selectIdentificacion');
 Route::get('/tipo_contacto_telefonico/selectContacto', 'EmpleadoController@selectContacto');
+Route::get('/empleados/selectEmpleado', 'EmpleadoController@selectEmpleado');
+
+Route::post('/contrato/registrar','ContratoController@store');
+Route::put('/contrato/actualizar','ContratoController@update');
+Route::put('/contrato/activar','ContratoController@activar');

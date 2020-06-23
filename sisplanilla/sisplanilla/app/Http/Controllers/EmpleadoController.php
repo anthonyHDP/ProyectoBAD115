@@ -25,54 +25,50 @@ class EmpleadoController extends Controller
      */
     public function index(Request $request)
     {
-        if (!$request->ajax()) return redirect('/');
+       //if (!$request->ajax()) return redirect('/');
 
         $buscar = $request->buscar;
         $criterio = $request->criterio;
         
         if ($buscar==''){
-            $empleados = Empleado::join('generos','empleados.id_genero','=','empleados.id')
-            ->select('empleados.id','empleados.idcategoria','empleados.titulo','empleados.codigo_empleado','empleados.primer_nombre','empleados.segundo_nombre','empleados.primer_apellido','empleados.segundo_apellido','empleados.codigo_jefe')
-            ->orderBy('empleados.id', 'desc')->paginate(3);
+            $empleados = Empleado::join('generos','empleados.id_genero','=','generos.id_genero')
+            ->select('empleados.codigo_empleado','empleados.id_genero','empleados.titulo','empleados.primer_nombre','empleados.segundo_nombre','empleados.primer_apellido','empleados.segundo_apellido','empleados.codigo_jefe','empleados.email_personal','empleados.email_institucional')
+            ->orderBy('empleados.codigo_empleado', 'desc')->paginate(3);
         }
 
 
         else{
-            $empleados = Empleado::join('generos','empleados.idgenero','=','empleados.id')
-            ->select('empleados.id','empleados.idcategoria','empleados.titulo','empleados.codigo_empleado','empleados.primer_nombre','empleados.segundo_nombre','empleados.primer_apellido','empleados.segundo_apellido','empleados.codigo_jefe')
+            $empleados = Empleado::join('generos','empleados.id_genero','=','generos.id_genero')
+            ->select('empleados.codigo_empleado','empleados.id_genero','empleados.titulo','empleados.primer_nombre','empleados.segundo_nombre','empleados.primer_apellido','empleados.segundo_apellido','empleados.codigo_jefe','empleados.email_personal','empleados.email_institucional')
             ->where('empleados.'.$criterio, 'like', '%'. $buscar . '%')
-            ->orderBy('empleados.id', 'desc')->paginate(3);
+            ->orderBy('empleados.codigo_empleado', 'desc')->paginate(3);
         }
-
-/*
+       
+        
+        /*
 
         if ($buscar==''){
-            $empleados = Empleado::orderBy('id', 'desc')->paginate(3);
+            $empleado = Empleado::orderBy('codigo_empleado', 'desc')->paginate(3);
         }
         else{
-            $empleados = Empleado::where($criterio, 'like', '%'. $buscar . '%')->orderBy('id', 'desc')->paginate(3);
+            $empleado = Empleado::where($criterio, 'like', '%'. $buscar . '%')->orderBy('codigo_empleado', 'desc')->paginate(3);
         }
         
 */
         return [
             'pagination' => [
-                'total'        => $empleados->total(),
-                'current_page' => $empleados->currentPage(),
-                'per_page'     => $empleados->perPage(),
-                'last_page'    => $empleados->lastPage(),
-                'from'         => $empleados->firstItem(),
-                'to'           => $empleados->lastItem(),
+                'total'        => $empleado->total(),
+                'current_page' => $empleado->currentPage(),
+                'per_page'     => $empleado->perPage(),
+                'last_page'    => $empleado->lastPage(),
+                'from'         => $empleado->firstItem(),
+                'to'           => $empleado->lastItem(),
             ],
             'Empleados' => $empleados
         ];
     }
 
-    public function selectEmpleado(Request $request){
-        if (!$request->ajax()) return redirect('/');
-        $empleados = Empleado::where('condicion','=','1')
-        ->select('id','primer_nombre')->orderBy('primer_nombre', 'asc')->get();
-        return ['categorias' => $empleados];
-    }
+    
 
     //Metodo para Guardar Objeto Direccion
     public function storew(Request $request){
@@ -107,8 +103,9 @@ class EmpleadoController extends Controller
                 $documentos_identificacion->detalles=$request->detalles;
                 $documentos_identificacion->save();
 
-
                 $empleado=new Empleado();
+                $empleado->codigo_empleado='GG2020';
+                $empleado->codigo_jefe=$request->codigo_jefe;
                 $empleado->primer_nombre =$request->primer_nombre;
                 $empleado->segundo_nombre=$request->segundo_nombre;
                 $empleado->primer_apellido=$request->primer_apellido;
@@ -120,12 +117,14 @@ class EmpleadoController extends Controller
                 $empleado->identificador_nup=$request->identificador_nup;
                 $empleado->identificador_nit=$request->identificador_nit;
                 $empleado->codigo_profesion=$request->codigo_profesion;
-                $empleado->id_direccion=$request->id_direccion;
-                $empleado->numero_documento_identificacion=$request->numero_documento_identificacion;
+                $empleado->id_direccion=2;
+                $empleado->numero_documento_identificacion=1;
                 $empleado->id_estado_civil=$request->id_estado_civil;
                 $empleado->id_genero=$request->id_genero;
-                $empleado->id_contacto_telefonico=$request->id_contacto_telefonico;
+                $empleado->id_contacto_telefonico=2;
+                /*
                 $empleado->condicion='1';
+                */
                 $empleado->save();
 
          }
@@ -165,10 +164,12 @@ class EmpleadoController extends Controller
         $empleado->id_estado_civil=$request->id_estado_civil;
         $empleado->id_genero=$request->id_genero;
         $empleado->id_contacto_telefonico=$request->id_contacto_telefonico;
+        /*
         $empleado->condicion='1';
+        */
         $empleado->save();
     }
-
+    /*
     public function desactivar(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
@@ -184,14 +185,40 @@ class EmpleadoController extends Controller
         $empleado->condicion = '1';
         $empleado->save();
     }
+    */
+    //LISTAR EMPLEADOS
+    /*
+    public function selectEmpleado(Request $request){
+        if (!$request->ajax()) return redirect('/');
+        $empleados_jefe = Empleado::select('codigo_empleado')->orderBy('codigo_empleado', 'asc')->get();
+        return ['empleados_jefe' => $empleados_jefe];
+    }
+    */
+    public function selectEmpleados(Request $request){
+
+        //if (!$request->ajax()) return redirect('/');
+
+        $buscarCodigo = $request->codigo_empleado;
+        
+        $empleado = Empleado::select('primer_nombre', 'segundo_nombre', 'primer_apellido', 'segundo_apellido')
+                            ->where('codigo_empleado', '=', $buscarCodigo)
+                            ->get();
+        
+        if(!$usuario){
+            return ['empleado' => $empleado];
+        }else{
+            return ['empleado' => $empleado, 'bandera' => '0'];
+        }
+
+        
     
+    }
     //LISTAR CODIGO DE PROFESIONES
     public function selectProfesion(Request $request){
         if (!$request->ajax()) return redirect('/');
         $profesiones = Profesiones::select('codigo_profesion','titulo')->orderBy('titulo', 'asc')->get();
         return ['profesiones' => $profesiones];
     }
-    
     //LISTAR MUNICIPIOS
     public function selectDireccionMunicipio(Request $request){
         if (!$request->ajax()) return redirect('/');
